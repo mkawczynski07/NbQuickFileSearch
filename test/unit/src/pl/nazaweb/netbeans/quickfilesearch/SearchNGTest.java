@@ -39,12 +39,10 @@ public class SearchNGTest {
                 result.put(entry.getKey(), entry.getValue());
             }
         }
-
-        assertEquals(result.size(), 30000);
-
         long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;
         System.out.println(elapsedTime);
+        assertEquals(result.size(), 30000);
         return elapsedTime;
     }
 

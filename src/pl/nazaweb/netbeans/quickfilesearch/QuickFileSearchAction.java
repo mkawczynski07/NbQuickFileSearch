@@ -1,22 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.nazaweb.netbeans.quickfilesearch;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.netbeans.api.project.FileOwnerQuery;
 import org.netbeans.api.project.Project;
-import org.netbeans.api.project.ui.OpenProjects;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
 import org.openide.filesystems.FileAttributeEvent;
 import org.openide.filesystems.FileChangeListener;
 import org.openide.filesystems.FileEvent;
-import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileRenameEvent;
 import org.openide.loaders.DataObject;
 import org.openide.util.Lookup;
@@ -38,10 +31,6 @@ public final class QuickFileSearchAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        OpenProjects.getDefault().getMainProject().getProjectDirectory().addFileChangeListener();
-        for (FileObject file : OpenProjects.getDefault().getMainProject().getProjectDirectory().getChildren()) {
-            System.out.println(file.getName() + ", path: " + file.getPath());
-        }
 
         final Lookup.Result<DataObject> dtoResult = Utilities.actionsGlobalContext().lookupResult(DataObject.class);
         dtoResult.addLookupListener(new LookupListener() {
