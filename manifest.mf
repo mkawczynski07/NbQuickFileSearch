@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 OpenIDE-Module: pl.nazaweb.netbeans.quickfilesearch
 OpenIDE-Module-Localizing-Bundle: pl/nazaweb/netbeans/quickfilesearch/Bundle.properties
-OpenIDE-Module-Install: pl/nazaweb/netbeans/quickfilesearch/Startup.class
+OpenIDE-Module-Install: pl/nazaweb/netbeans/quickfilesearch/startup/Startup.class
 OpenIDE-Module-Specification-Version: 1.0
 

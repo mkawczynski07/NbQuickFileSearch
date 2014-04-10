@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2">
+        <file>
+            <url>src/pl/nazaweb/netbeans/quickfilesearch/files/FileCollector.java</url>
+            <bookmark id="2">
+                <name/>
+                <line>48</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/home/naza/Programowanie/projekty/src/netbeans/NbQuickFileSearch/src/pl/nazaweb/netbeans/quickfilesearch/Startup.java</file>
-            <file>file:/home/naza/Programowanie/projekty/src/netbeans/NbQuickFileSearch/src/pl/nazaweb/netbeans/quickfilesearch/QuickFileSearchAction.java</file>
-            <file>file:/home/naza/Programowanie/projekty/src/netbeans/NbQuickFileSearch/nbproject/project.xml</file>
-            <file>file:/home/naza/Programowanie/projekty/src/netbeans/NbQuickFileSearch/src/pl/nazaweb/netbeans/quickfilesearch/utils/FileUtils.java</file>
-            <file>file:/home/naza/Programowanie/projekty/src/netbeans/NbQuickFileSearch/src/pl/nazaweb/netbeans/quickfilesearch/startup/FileCollector.java</file>
-            <file>file:/home/naza/Programowanie/projekty/src/netbeans/NbQuickFileSearch/src/pl/nazaweb/netbeans/quickfilesearch/startup/FileCache.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

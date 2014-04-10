@@ -1,4 +1,4 @@
-package pl.nazaweb.netbeans.quickfilesearch.startup;
+package pl.nazaweb.netbeans.quickfilesearch.files;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,8 +34,7 @@ public class FileCollector {
     private void addProjectFiles(Project project) throws IOException {
         for (FileObject file : project.getProjectDirectory().getChildren()) {
             if (file.isFolder() == false) {
-                System.out.println(">>> file "+file.getPath());
-                files.put(file.getPath(), file);
+                putFile(file);
             } else {
                 addFolderFiles(new File(file.getPath()));
             }
@@ -44,14 +43,32 @@ public class FileCollector {
 
     private void addFolderFiles(File file) throws IOException {
         if (file.isDirectory()) {
-            for (File child : file.listFiles(new IgnoreFileFilter())) {
-                addFolderFiles(child);
+            if (shouldIgnoreFolder(file) == false) {
+                addFolderChildrens(file);
             }
         } else {
             FileObject fileObject = FileUtil.createData(file);
-            System.out.println(">>> file "+fileObject.getPath());
-            files.put(fileObject.getPath(), fileObject);
+            putFile(fileObject);
         }
+    }
+
+    private void addFolderChildrens(File file) throws IOException {
+        for (File child : file.listFiles(new IgnoreFileFilter())) {
+            addFolderFiles(child);
+        }
+    }
+
+    private void putFile(FileObject file) {
+        files.put(file.getPath(), file);
+    }
+
+    //TODO: create configuration for ingoring directories
+    private boolean shouldIgnoreFolder(File folder) {
+        String folderName = folder.getName().toLowerCase();
+        return folderName.equals("classes")
+                || folderName.equals("build")
+                || folderName.equals("target")
+                || folderName.equals("nbproject");
     }
 
 }

@@ -1,4 +1,4 @@
-package pl.nazaweb.netbeans.quickfilesearch.startup;
+package pl.nazaweb.netbeans.quickfilesearch.files;
 
 import java.io.IOException;
 import java.util.Map;
@@ -21,6 +21,20 @@ public class FileCache {
             INSTANCE = new FileCache();
         }
         return INSTANCE;
+    }
+
+    public void addFile(FileObject object) {
+        System.out.println("addding file : " + object.getPath());
+        files.put(object.getPath(), object);
+    }
+
+    public void removeFile(String path) {
+        System.out.println("remove : " + path);
+        files.remove(path);
+    }
+
+    public Map<String, FileObject> getFiles() {
+        return files;
     }
 
     public void init() throws IOException {

@@ -1,9 +1,10 @@
-package pl.nazaweb.netbeans.quickfilesearch;
+package pl.nazaweb.netbeans.quickfilesearch.startup;
 
 import java.io.IOException;
 import org.openide.modules.ModuleInstall;
 import org.openide.util.Exceptions;
-import pl.nazaweb.netbeans.quickfilesearch.startup.FileCache;
+import org.openide.windows.WindowManager;
+import pl.nazaweb.netbeans.quickfilesearch.files.FileCache;
 
 /**
  *
@@ -15,6 +16,12 @@ public class Startup extends ModuleInstall {
     public void restored() {
         try {
             FileCache.getIntance().init();
+            WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
+                @Override
+                public void run() {
+                    //TODO: create file listener
+                }
+            });
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }

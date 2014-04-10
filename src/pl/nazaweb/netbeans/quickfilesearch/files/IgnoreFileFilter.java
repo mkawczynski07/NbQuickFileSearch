@@ -1,4 +1,4 @@
-package pl.nazaweb.netbeans.quickfilesearch.startup;
+package pl.nazaweb.netbeans.quickfilesearch.files;
 
 import java.io.File;
 import java.io.FileFilter;
