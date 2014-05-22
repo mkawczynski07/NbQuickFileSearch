@@ -25,7 +25,7 @@ public class Startup extends ModuleInstall {
                 @Override
                 public void run() {
                     for (Project project : getOpenProjects()) {
-                        System.out.println(project.getProjectDirectory().getPath());
+                        System.out.println(">>>>>>>"+project.getProjectDirectory().getPath());
                         Path path = Paths.get(project.getProjectDirectory().getPath());
                         try {
                             FileChangeWatcher watcher = new FileChangeWatcher(path);

@@ -19,11 +19,11 @@ import java.util.Map;
  *
  * @author naza
  */
-public class FileChangeWatcher {
+public class FileChangeWatcher implements Runnable {
 
     private final WatchService watcher;
     private final Map<WatchKey, Path> keys;
-    FileChangeEventDispatcher dispatcher;
+    private final FileChangeEventDispatcher dispatcher;
 
     public FileChangeWatcher(Path dir) throws IOException {
         this.watcher = FileSystems.getDefault().newWatchService();
@@ -37,68 +37,52 @@ public class FileChangeWatcher {
     }
 
     public void watch() {
-        new Thread(new Runnable() {
+        new Thread(this).start();
+    }
 
-            @Override
-            public void run() {
-                startWatching();
-            }
-        }).start();
+    @Override
+    public void run() {
+        startWatching();
     }
 
     private void startWatching() {
         for (;;) {
-            // wait for key to be signalled
-            WatchKey key;
-            try {
-                key = watcher.take();
-            } catch (InterruptedException x) {
+            WatchKey key = tryTaketKeyFromWatcher();
+            if (isExists(key)) {
                 return;
             }
-            Path dir = keys.get(key);
-            if (dir == null) {
-                System.err.println("WatchKey not recognized!!");
+
+            Path dir = getDirectoryFromKey(key);
+            if (isExists(dir)) {
                 continue;
             }
 
             for (WatchEvent<?> event : key.pollEvents()) {
                 WatchEvent.Kind kind = event.kind();
 
-                // TBD - provide example of how OVERFLOW event is handled
                 if (kind == OVERFLOW) {
                     continue;
                 }
 
-                // Context for directory entry event is the file name of entry
-                WatchEvent<Path> ev = castToWatchEvent(event);
-                Path name = ev.context();
-                Path child = dir.resolve(name);
+                WatchEvent<Path> pathEvent = castToWatchEvent(event);
+                Path name = pathEvent.context();
+                Path eventFile = dir.resolve(name);
 
-                // print out event
-                System.out.format("%s: %s\n", event.kind().name(), child);
-
-                // if directory is created, and watching recursively, then
-                // register it and its sub-directories
                 if (kind == ENTRY_CREATE) {
                     try {
-                        if (Files.isDirectory(child, NOFOLLOW_LINKS)) {
-                            registerWatcherRecursively(child);
+                        if (Files.isDirectory(eventFile, NOFOLLOW_LINKS)) {
+                            registerWatcherRecursively(eventFile);
                         }
                     } catch (IOException x) {
-                        // ignore to keep sample readbale
                     }
                 }
 
-                dispatcher.handleEvent(child.toFile(), event.kind());
+                dispatcher.handleEvent(eventFile.toFile(), event.kind());
 
             }
 
-            // reset key and remove from set if directory no longer accessible
-            boolean valid = key.reset();
-            if (!valid) {
+            if (isKeyInaccessible(key)) {
                 keys.remove(key);
-
-                // all directories are inaccessible
                 if (keys.isEmpty()) {
                     break;
                 }
@@ -109,8 +93,7 @@ public class FileChangeWatcher {
     private void registerWatcherRecursively(final Path start) throws IOException {
         Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
             @Override
-            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
-                    throws IOException {
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
                 registerWatcherOnDirectory(dir);
                 return FileVisitResult.CONTINUE;
             }
@@ -119,15 +102,27 @@ public class FileChangeWatcher {
 
     private void registerWatcherOnDirectory(Path dir) throws IOException {
         WatchKey key = dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
-        Path prev = keys.get(key);
-        if (prev == null) {
-            System.out.format("register: %s\n", dir);
-        } else {
-            if (!dir.equals(prev)) {
-                System.out.format("update: %s -> %s\n", prev, dir);
-            }
-        }
         keys.put(key, dir);
+    }
+
+    private WatchKey tryTaketKeyFromWatcher() {
+        try {
+            return watcher.take();
+        } catch (InterruptedException x) {
+            return null;
+        }
+    }
+
+    private boolean isExists(Object object) {
+        return object == null;
+    }
+
+    private Path getDirectoryFromKey(WatchKey key) {
+        return keys.get(key);
+    }
+
+    private boolean isKeyInaccessible(WatchKey key) {
+        return key.reset();
     }
 
 }
