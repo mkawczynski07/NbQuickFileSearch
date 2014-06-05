@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="QuickSearch">
+        <folder name="Filesearch">
+            <attr name="command" stringvalue="f"/>
+            <attr name="position" intvalue="0"/>
+            <file name="pl-nazaweb-netbeans-quickfilesearch-QuickFileSearchProvider.instance">
+                <attr name="displayName" bundlevalue="pl.nazaweb.netbeans.quickfilesearch.Bundle#QuickSearch/Filesearch/pl-nazaweb-netbeans-quickfilesearch-QuickFileSearchProvider.instance"/>
+            </file>
+        </folder>
+    </folder>
+</filesystem>

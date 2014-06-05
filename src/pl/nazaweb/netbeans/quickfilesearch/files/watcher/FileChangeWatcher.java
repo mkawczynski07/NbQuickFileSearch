@@ -47,13 +47,15 @@ public class FileChangeWatcher implements Runnable {
 
     private void startWatching() {
         for (;;) {
-            WatchKey key = tryTaketKeyFromWatcher();
-            if (isExists(key)) {
+            WatchKey key;
+            try {
+                key = watcher.take();
+            } catch (InterruptedException x) {
                 return;
             }
-
-            Path dir = getDirectoryFromKey(key);
-            if (isExists(dir)) {
+            Path dir = keys.get(key);
+            if (dir == null) {
+                System.err.println("WatchKey not recognized!!");
                 continue;
             }
 
@@ -64,24 +66,25 @@ public class FileChangeWatcher implements Runnable {
                     continue;
                 }
 
-                WatchEvent<Path> pathEvent = castToWatchEvent(event);
-                Path name = pathEvent.context();
-                Path eventFile = dir.resolve(name);
+                WatchEvent<Path> ev = castToWatchEvent(event);
+                Path name = ev.context();
+                Path child = dir.resolve(name);
 
                 if (kind == ENTRY_CREATE) {
                     try {
-                        if (Files.isDirectory(eventFile, NOFOLLOW_LINKS)) {
-                            registerWatcherRecursively(eventFile);
+                        if (Files.isDirectory(child, NOFOLLOW_LINKS)) {
+                            registerWatcherRecursively(child);
                         }
                     } catch (IOException x) {
                     }
                 }
 
-                dispatcher.handleEvent(eventFile.toFile(), event.kind());
+                dispatcher.handleEvent(child.toFile(), event.kind());
 
             }
 
-            if (isKeyInaccessible(key)) {
+            boolean valid = key.reset();
+            if (!valid) {
                 keys.remove(key);
                 if (keys.isEmpty()) {
                     break;
@@ -104,25 +107,4 @@ public class FileChangeWatcher implements Runnable {
         WatchKey key = dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
         keys.put(key, dir);
     }
-
-    private WatchKey tryTaketKeyFromWatcher() {
-        try {
-            return watcher.take();
-        } catch (InterruptedException x) {
-            return null;
-        }
-    }
-
-    private boolean isExists(Object object) {
-        return object == null;
-    }
-
-    private Path getDirectoryFromKey(WatchKey key) {
-        return keys.get(key);
-    }
-
-    private boolean isKeyInaccessible(WatchKey key) {
-        return key.reset();
-    }
-
 }

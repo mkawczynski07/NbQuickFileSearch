@@ -3,12 +3,14 @@ package pl.nazaweb.netbeans.quickfilesearch;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map.Entry;
+import org.netbeans.api.project.Project;
+import org.netbeans.api.project.ui.OpenProjects;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
-import org.openide.filesystems.FileObject;
 import org.openide.util.NbBundle.Messages;
 import pl.nazaweb.netbeans.quickfilesearch.files.FileCache;
+import pl.nazaweb.netbeans.quickfilesearch.files.FileItem;
 
 @ActionID(
         category = "File",
@@ -23,9 +25,15 @@ public final class QuickFileSearchAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        for (Entry<String, FileObject> entry : FileCache.getIntance().getFiles().entrySet()) {
-            System.out.println(">> " + entry.getKey());
+        for (Project project : OpenProjects.getDefault().getOpenProjects()) {
+            System.out.println(">>>>>>>" + project.getProjectDirectory().getPath());
+            for (Entry<String, FileItem> entry : FileCache.getIntance()
+                    .getProjectFiles(project.getProjectDirectory().getPath())
+                    .entrySet()) {
+
+                System.out.println(">> " + entry.getKey());
+            }
+
         }
-        System.out.println("summary: " + FileCache.getIntance().getFiles().size());
     }
 }

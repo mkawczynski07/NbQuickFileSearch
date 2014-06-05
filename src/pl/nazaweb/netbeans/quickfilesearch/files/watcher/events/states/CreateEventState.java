@@ -15,7 +15,7 @@ import pl.nazaweb.netbeans.quickfilesearch.files.watcher.events.EventHandler;
  */
 public class CreateEventState implements EventHandler {
 
-    private IgnoreFileFilter ignoreFilter = new IgnoreFileFilter();
+    private final IgnoreFileFilter ignoreFilter = new IgnoreFileFilter();
 
     @Override
     public void handle(File file) {
@@ -27,7 +27,7 @@ public class CreateEventState implements EventHandler {
             fileObject = FileUtil.createData(file);
             FileCache.getIntance().addFile(fileObject);
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Exceptions.printStackTrace(ex);
         }
     }
