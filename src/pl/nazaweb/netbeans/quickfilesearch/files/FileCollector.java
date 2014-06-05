@@ -54,7 +54,9 @@ public class FileCollector {
         return folderName.equals("classes")
                 || folderName.equals("build")
                 || folderName.equals("target")
-                || folderName.equals("nbproject");
+                || folderName.equals("nbproject")
+                || folderName.equals(".git")
+                || folderName.equals(".svn");
     }
 
 }

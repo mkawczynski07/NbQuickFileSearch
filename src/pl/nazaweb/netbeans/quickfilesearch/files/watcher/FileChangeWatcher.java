@@ -1,5 +1,6 @@
 package pl.nazaweb.netbeans.quickfilesearch.files.watcher;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
@@ -104,7 +105,23 @@ public class FileChangeWatcher implements Runnable {
     }
 
     private void registerWatcherOnDirectory(Path dir) throws IOException {
+        File file = dir.toFile();
+        if (file.isDirectory()) {
+            if (shouldIgnoreFolder(file)) {
+                return;
+            }
+        }
         WatchKey key = dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
         keys.put(key, dir);
+    }
+
+    private boolean shouldIgnoreFolder(File folder) {
+        String folderName = folder.getName().toLowerCase();
+        return folderName.equals("classes")
+                || folderName.equals("build")
+                || folderName.equals("target")
+                || folderName.equals("nbproject")
+                || folderName.equals(".git")
+                || folderName.equals(".svn");
     }
 }
