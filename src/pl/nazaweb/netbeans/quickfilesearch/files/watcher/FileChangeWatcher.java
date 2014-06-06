@@ -38,7 +38,9 @@ public class FileChangeWatcher implements Runnable {
     }
 
     public void watch() {
-        new Thread(this).start();
+        Thread thread = new Thread(this);
+        thread.setPriority(Thread.MIN_PRIORITY);
+        thread.start();
     }
 
     @Override
