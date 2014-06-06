@@ -16,7 +16,7 @@ public class QuickFileSearchProvider implements SearchProvider {
             for (Map.Entry<String, FileItem> file : project.getValue().entrySet()) {
                 FileItem item = file.getValue();
                 if (item.getName().toLowerCase().contains(request.getText().toLowerCase())) {
-                    if (!response.addResult(item, item.getName(), item.getPath(), null)) {
+                    if (!response.addResult(item, item.display(), item.getPath(), null)) {
                         return;
                     }
                 }

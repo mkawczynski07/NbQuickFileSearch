@@ -55,4 +55,11 @@ public class FileItem implements Runnable {
         return projectName;
     }
 
+    public String display() {
+        return String.format("%s - %s (%s)",
+                name,
+                projectName,
+                path.substring(path.indexOf(projectName) + projectName.length()));
+    }
+
 }

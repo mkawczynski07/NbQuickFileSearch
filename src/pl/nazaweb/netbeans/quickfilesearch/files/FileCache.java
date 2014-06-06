@@ -42,11 +42,11 @@ public class FileCache {
     }
 
     public Map<String, FileItem> getProjectFiles(String projectPath) {
-        return projectsFiles.get(projectPath.toLowerCase());
+        return projectsFiles.get(projectPath);
     }
 
     public void addProject(String projectPaths) {
-        projectsFiles.put(projectPaths.toLowerCase(), new HashMap());
+        projectsFiles.put(projectPaths, new HashMap());
     }
 
     private Entry<String, Map<String, FileItem>> getProjectFilesByFile(String filePath) throws Exception {
