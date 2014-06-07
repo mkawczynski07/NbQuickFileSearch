@@ -56,10 +56,9 @@ public class FileItem implements Runnable {
     }
 
     public String display() {
-        return String.format("%s - %s (%s)",
+        return String.format("%s (%s)",
                 name,
-                projectName,
-                path.substring(path.indexOf(projectName) + projectName.length()));
+                path.substring(path.indexOf(projectName)));
     }
 
 }
