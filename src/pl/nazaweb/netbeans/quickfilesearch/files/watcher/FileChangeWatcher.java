@@ -108,22 +108,20 @@ public class FileChangeWatcher implements Runnable {
 
     private void registerWatcherOnDirectory(Path dir) throws IOException {
         File file = dir.toFile();
-        if (file.isDirectory()) {
-            if (shouldIgnoreFolder(file)) {
-                return;
-            }
+        if (shouldIgnoreFile(file)) {
+            return;
         }
         WatchKey key = dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
         keys.put(key, dir);
     }
 
-    private boolean shouldIgnoreFolder(File folder) {
-        String folderName = folder.getName().toLowerCase();
-        return folderName.equals("classes")
-                || folderName.equals("build")
-                || folderName.equals("target")
-                || folderName.equals("nbproject")
-                || folderName.equals(".git")
-                || folderName.equals(".svn");
+    private boolean shouldIgnoreFile(File file) {
+        String filePath = file.getPath().toLowerCase();
+        return filePath.contains("classes")
+                || filePath.contains("build")
+                || filePath.contains("target")
+                || filePath.contains("nbproject")
+                || filePath.contains(".git")
+                || filePath.contains(".svn");
     }
 }
