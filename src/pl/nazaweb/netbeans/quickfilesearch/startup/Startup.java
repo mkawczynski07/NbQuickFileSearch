@@ -5,6 +5,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.netbeans.api.project.Project;
 import org.netbeans.api.project.ui.OpenProjects;
+import org.netbeans.api.project.ui.ProjectGroupChangeEvent;
+import org.netbeans.api.project.ui.ProjectGroupChangeListener;
 import org.openide.modules.ModuleInstall;
 import org.openide.util.Exceptions;
 import org.openide.windows.WindowManager;
@@ -20,22 +22,44 @@ public class Startup extends ModuleInstall {
 
     @Override
     public void restored() {
+        addProjectGroupChangeListener();
         WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
             @Override
             public void run() {
-                for (Project project : getOpenProjects()) {
+                initOpenProjectsFiles();
+            }
 
-                    Path path = Paths.get(project.getProjectDirectory().getPath());
-                    addProjectToFileCache(project);
+        });
+    }
 
-                    try {
-                        addExistingFilesToFileCache(project);
-                        runFileWatcher(path);
-                    } catch (IOException ex) {
-                        Exceptions.printStackTrace(ex);
-                    }
+    private void initOpenProjectsFiles() {
+        for (Project project : getOpenProjects()) {
 
-                }
+            Path path = Paths.get(project.getProjectDirectory().getPath());
+            addProjectToFileCache(project);
+
+            try {
+                addExistingFilesToFileCache(project);
+                runFileWatcher(path);
+            } catch (IOException ex) {
+                Exceptions.printStackTrace(ex);
+            }
+
+        }
+    }
+
+    private void addProjectGroupChangeListener() {
+        OpenProjects.getDefault().addProjectGroupChangeListener(new ProjectGroupChangeListener() {
+
+            @Override
+            public void projectGroupChanging(ProjectGroupChangeEvent pgce) {
+                clearSharedData();
+            }
+
+            @Override
+            public void projectGroupChanged(ProjectGroupChangeEvent pgce) {
+                initOpenProjectsFiles();
+
             }
         });
     }
@@ -54,7 +78,7 @@ public class Startup extends ModuleInstall {
     }
 
     private void addProjectToFileCache(Project project) {
-        FileCache.getIntance().addProject(project.getProjectDirectory().getPath());
+        FileCache.getInstance().addProject(project.getProjectDirectory().getPath());
     }
 
 }

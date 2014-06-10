@@ -14,7 +14,7 @@ public class DeleteEventState implements EventHandler {
     @Override
     public void handle(File file) {
         try {
-            FileCache.getIntance().removeFile(file.getAbsolutePath());
+            FileCache.getInstance().removeFile(file.getAbsolutePath());
         } catch (Exception ex) {
             Exceptions.printStackTrace(ex);
         }

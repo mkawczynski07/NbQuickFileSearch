@@ -27,7 +27,7 @@ public final class QuickFileSearchAction implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         for (Project project : OpenProjects.getDefault().getOpenProjects()) {
             System.out.println(">>>>>>>" + project.getProjectDirectory().getPath());
-            for (Entry<String, FileItem> entry : FileCache.getIntance()
+            for (Entry<String, FileItem> entry : FileCache.getInstance()
                     .getProjectFiles(project.getProjectDirectory().getPath())
                     .entrySet()) {
 

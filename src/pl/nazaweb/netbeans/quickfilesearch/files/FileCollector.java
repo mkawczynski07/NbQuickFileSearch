@@ -42,7 +42,7 @@ public class FileCollector {
 
     private void addFile(FileObject file) {
         try {
-            FileCache.getIntance().addFile(file);
+            FileCache.getInstance().addFile(file);
         } catch (Exception ex) {
             Exceptions.printStackTrace(ex);
         }

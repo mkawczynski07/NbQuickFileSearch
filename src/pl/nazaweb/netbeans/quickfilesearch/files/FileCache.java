@@ -20,7 +20,7 @@ public class FileCache {
     private FileCache() {
     }
 
-    public static FileCache getIntance() {
+    public static FileCache getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new FileCache();
         }

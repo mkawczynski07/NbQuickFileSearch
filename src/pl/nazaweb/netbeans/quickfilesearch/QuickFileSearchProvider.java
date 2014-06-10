@@ -12,7 +12,7 @@ public class QuickFileSearchProvider implements SearchProvider {
     @Override
     public void evaluate(SearchRequest request, SearchResponse response) {
 
-        for (Map.Entry<String, Map<String, FileItem>> project : FileCache.getIntance().getProjectsFiles().entrySet()) {
+        for (Map.Entry<String, Map<String, FileItem>> project : FileCache.getInstance().getProjectsFiles().entrySet()) {
             for (Map.Entry<String, FileItem> file : project.getValue().entrySet()) {
                 FileItem item = file.getValue();
                 if (item.getName().toLowerCase().contains(request.getText().toLowerCase())) {

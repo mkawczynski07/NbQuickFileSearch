@@ -25,7 +25,7 @@ public class CreateEventState implements EventHandler {
         FileObject fileObject;
         try {
             fileObject = FileUtil.createData(file);
-            FileCache.getIntance().addFile(fileObject);
+            FileCache.getInstance().addFile(fileObject);
 
         } catch (Exception ex) {
             Exceptions.printStackTrace(ex);
