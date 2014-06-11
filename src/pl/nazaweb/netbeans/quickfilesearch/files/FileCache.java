@@ -14,8 +14,8 @@ public class FileCache {
 
     private static FileCache INSTANCE;
     private final IgnoreFileFilter fileFilter = new IgnoreFileFilter();
-    private final Map<String, Map<String, FileItem>> projectsFiles = new HashMap();
-    private final Map<String, Entry<String, Map<String, FileItem>>> filesToProject = new HashMap();
+    private Map<String, Map<String, FileItem>> projectsFiles = new HashMap();
+    private Map<String, Entry<String, Map<String, FileItem>>> filesToProject = new HashMap();
 
     private FileCache() {
     }
@@ -25,6 +25,11 @@ public class FileCache {
             INSTANCE = new FileCache();
         }
         return INSTANCE;
+    }
+
+    public void clear() {
+        projectsFiles = new HashMap();
+        filesToProject = new HashMap();
     }
 
     public void addFile(FileObject object) throws Exception {

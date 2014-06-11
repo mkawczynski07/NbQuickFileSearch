@@ -58,6 +58,7 @@ public class Startup extends ModuleInstall {
 
             @Override
             public void projectGroupChanged(ProjectGroupChangeEvent pgce) {
+                clearCache();
                 initOpenProjectsFiles();
 
             }
@@ -79,6 +80,10 @@ public class Startup extends ModuleInstall {
 
     private void addProjectToFileCache(Project project) {
         FileCache.getInstance().addProject(project.getProjectDirectory().getPath());
+    }
+
+    private void clearCache() {
+        FileCache.getInstance().clear();
     }
 
 }
