@@ -3,7 +3,7 @@ NbQuickFileSearch
 
 Netbeans plugin for quick file search.
 
-Version: 1.0 Beta 4 relased [link](NbQuickFileSearch.nbm).
+Version: 1.0 Beta 5 relased [link](NbQuickFileSearch.nbm).
 
 ## Changelog
 * 2014-06-12
