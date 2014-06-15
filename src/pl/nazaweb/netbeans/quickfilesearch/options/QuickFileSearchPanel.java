@@ -5,14 +5,18 @@
  */
 package pl.nazaweb.netbeans.quickfilesearch.options;
 
+import java.util.List;
+import javax.swing.DefaultListModel;
+
 final class QuickFileSearchPanel extends javax.swing.JPanel {
 
     private final QuickFileSearchOptionsPanelController controller;
+    private final DefaultListModel<String> model = new DefaultListModel<String>();
 
     QuickFileSearchPanel(QuickFileSearchOptionsPanelController controller) {
         this.controller = controller;
         initComponents();
-        // TODO listen to changes in form fields and call controller.changed()
+        showError(false);
     }
 
     /**
@@ -23,59 +27,172 @@ final class QuickFileSearchPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
-        jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jListIgnoredDirectories = new javax.swing.JList(model);
+        labelIgnoredDirectories = new javax.swing.JLabel();
+        jButtonAdd = new javax.swing.JButton();
+        jTextFieldIgnoredDirectories = new javax.swing.JTextField();
+        jButtonDelete = new javax.swing.JButton();
+        jLabelAlreadyExist = new javax.swing.JLabel();
+        jButtonDefault = new javax.swing.JButton();
 
-        setLayout(new java.awt.BorderLayout());
+        jScrollPane3.setViewportView(jListIgnoredDirectories);
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
+        org.openide.awt.Mnemonics.setLocalizedText(labelIgnoredDirectories, org.openide.util.NbBundle.getMessage(QuickFileSearchPanel.class, "QuickFileSearchPanel.labelIgnoredDirectories.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(jButtonAdd, org.openide.util.NbBundle.getMessage(QuickFileSearchPanel.class, "QuickFileSearchPanel.jButtonAdd.text")); // NOI18N
+        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddActionPerformed(evt);
+            }
         });
-        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(jList1);
 
-        add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        jTextFieldIgnoredDirectories.setText(org.openide.util.NbBundle.getMessage(QuickFileSearchPanel.class, "QuickFileSearchPanel.jTextFieldIgnoredDirectories.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(QuickFileSearchPanel.class, "QuickFileSearchPanel.jButton1.text")); // NOI18N
-        add(jButton1, java.awt.BorderLayout.PAGE_END);
+        org.openide.awt.Mnemonics.setLocalizedText(jButtonDelete, org.openide.util.NbBundle.getMessage(QuickFileSearchPanel.class, "QuickFileSearchPanel.jButtonDelete.text")); // NOI18N
+        jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteActionPerformed(evt);
+            }
+        });
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(QuickFileSearchPanel.class, "QuickFileSearchPanel.jLabel1.text")); // NOI18N
-        add(jLabel1, java.awt.BorderLayout.PAGE_START);
+        jLabelAlreadyExist.setForeground(new java.awt.Color(204, 0, 0));
+        org.openide.awt.Mnemonics.setLocalizedText(jLabelAlreadyExist, org.openide.util.NbBundle.getMessage(QuickFileSearchPanel.class, "QuickFileSearchPanel.jLabelAlreadyExist.text")); // NOI18N
+        jLabelAlreadyExist.setToolTipText(org.openide.util.NbBundle.getMessage(QuickFileSearchPanel.class, "QuickFileSearchPanel.jLabelAlreadyExist.toolTipText")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(jButtonDefault, org.openide.util.NbBundle.getMessage(QuickFileSearchPanel.class, "QuickFileSearchPanel.jButtonDefault.text")); // NOI18N
+        jButtonDefault.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDefaultActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(labelIgnoredDirectories, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextFieldIgnoredDirectories, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabelAlreadyExist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonDefault, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(544, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(labelIgnoredDirectories)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelAlreadyExist)
+                .addGap(3, 3, 3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonAdd)
+                    .addComponent(jTextFieldIgnoredDirectories))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonDelete)
+                    .addComponent(jButtonDefault))
+                .addContainerGap(192, Short.MAX_VALUE))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
+        String currentInput = jTextFieldIgnoredDirectories.getText();
+        addInputTextToListWithValidation(currentInput);
+    }//GEN-LAST:event_jButtonAddActionPerformed
+
+
+    private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
+        model.removeElementAt(jListIgnoredDirectories.getSelectedIndex());
+    }//GEN-LAST:event_jButtonDeleteActionPerformed
+
+    private void jButtonDefaultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDefaultActionPerformed
+        initDefaultList();
+        setModelListFromNbPreferences();
+        showError(false);
+    }//GEN-LAST:event_jButtonDefaultActionPerformed
+
     void load() {
-        // TODO read settings and initialize GUI
-        // Example:        
-        // someCheckBox.setSelected(Preferences.userNodeForPackage(QuickFileSearchPanel.class).getBoolean("someFlag", false));
-        // or for org.openide.util with API spec. version >= 7.4:
-        // someCheckBox.setSelected(NbPreferences.forModule(QuickFileSearchPanel.class).getBoolean("someFlag", false));
-        // or:
-        // someTextField.setText(SomeSystemOption.getDefault().getSomeStringProperty());
+        setModelListFromNbPreferences();
+    }
+
+    private void setModelListFromNbPreferences() {
+        model.clear();
+        List<String> storedIgnored = Options.getIgnoredFiles();
+        addIgnoredDirectoriesToModel(storedIgnored);
+    }
+
+    private void addIgnoredDirectoriesToModel(List<String> storedIgnored) {
+        for (String ignored : storedIgnored) {
+            model.addElement(ignored);
+        }
     }
 
     void store() {
-        // TODO store modified settings
-        // Example:
-        // Preferences.userNodeForPackage(QuickFileSearchPanel.class).putBoolean("someFlag", someCheckBox.isSelected());
-        // or for org.openide.util with API spec. version >= 7.4:
-        // NbPreferences.forModule(QuickFileSearchPanel.class).putBoolean("someFlag", someCheckBox.isSelected());
-        // or:
-        // SomeSystemOption.getDefault().setSomeStringProperty(someTextField.getText());
+        Options.storeIgnoredDirectories(model);
     }
 
     boolean valid() {
-        // TODO check whether form is consistent and complete
         return true;
     }
 
+
+    private void initDefaultList() {
+        DefaultIgnoredDirectoriesLoader.getInstance().initDefaultListToPrefs();
+    }
+
+    private void addInputTextToListWithValidation(String currentInput) {
+        boolean alreadyExist = false;
+        if (model.size() > 0) {
+            for (int i = 0; i < model.size(); i++) {
+                if (model.getElementAt(i).equals(currentInput)) {
+                    alreadyExist = true;
+                    showError(true);
+                }
+            }
+            if (!alreadyExist) {
+                addElementAndRefreshFields(currentInput);
+            }
+        } else {
+            addElementAndRefreshFields(currentInput);
+        }
+    }
+
+    private void showError(boolean showError) {
+        jLabelAlreadyExist.setVisible(showError);
+    }
+    
+
+    
+
+    private void addElementAndRefreshFields(String currentInput) {
+        jLabelAlreadyExist.setVisible(false);
+        model.addElement(currentInput);
+        jTextFieldIgnoredDirectories.setText("");
+        store();
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JList jList1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jButtonAdd;
+    private javax.swing.JButton jButtonDefault;
+    private javax.swing.JButton jButtonDelete;
+    private javax.swing.JLabel jLabelAlreadyExist;
+    private javax.swing.JList jListIgnoredDirectories;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextField jTextFieldIgnoredDirectories;
+    private javax.swing.JLabel labelIgnoredDirectories;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -1,11 +1,12 @@
 package pl.nazaweb.netbeans.quickfilesearch.startup;
 
 import org.netbeans.api.project.ui.OpenProjects;
-import org.netbeans.api.project.ui.ProjectGroupChangeEvent;
-import org.netbeans.api.project.ui.ProjectGroupChangeListener;
 import org.openide.modules.ModuleInstall;
 import org.openide.windows.WindowManager;
+import pl.nazaweb.netbeans.quickfilesearch.options.DefaultIgnoredDirectoriesLoader;
+import pl.nazaweb.netbeans.quickfilesearch.options.Options;
 import pl.nazaweb.netbeans.quickfilesearch.startup.listeners.ProjectPropertyChangeListener;
+import pl.nazaweb.netbeans.quickfilesearch.startup.listeners.QuickSearchProjectGroupChangeListener;
 
 /**
  *
@@ -15,7 +16,8 @@ public class Startup extends ModuleInstall {
 
     @Override
     public void restored() {
-        addProjectGroupChangeListener();
+        OpenProjects.getDefault().addProjectGroupChangeListener(QuickSearchProjectGroupChangeListener.getInstance());
+        initDefaultIgnoredDirectoriesList();
         WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
             @Override
             public void run() {
@@ -27,19 +29,10 @@ public class Startup extends ModuleInstall {
         });
     }
 
-    private void addProjectGroupChangeListener() {
-        OpenProjects.getDefault().addProjectGroupChangeListener(new ProjectGroupChangeListener() {
-
-            @Override
-            public void projectGroupChanging(ProjectGroupChangeEvent pgce) {
-                clearSharedData();
-            }
-
-            @Override
-            public void projectGroupChanged(ProjectGroupChangeEvent pgce) {
-                ProjectUtils.addFilesFromAllOpenProjectToCache();
-            }
-        });
+    private void initDefaultIgnoredDirectoriesList() {
+        if (Options.isIgnoredDirectoriesEmpty()) {
+            DefaultIgnoredDirectoriesLoader.getInstance().initDefaultListToPrefs();
+        }
     }
 
 }

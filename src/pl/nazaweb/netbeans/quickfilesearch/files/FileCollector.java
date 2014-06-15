@@ -2,10 +2,12 @@ package pl.nazaweb.netbeans.quickfilesearch.files;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import org.netbeans.api.project.Project;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.Exceptions;
+import pl.nazaweb.netbeans.quickfilesearch.options.Options;
 
 /**
  *
@@ -51,12 +53,13 @@ public class FileCollector {
     //TODO: create configuration for ignoring directories
     private boolean shouldIgnoreFolder(File folder) {
         String folderName = folder.getName().toLowerCase();
-        return folderName.equals("classes")
-                || folderName.equals("build")
-                || folderName.equals("target")
-                || folderName.equals("nbproject")
-                || folderName.equals(".git")
-                || folderName.equals(".svn");
+        List<String> storedIgnoredDirectories = Options.getIgnoredFiles();
+        for (String ignoredDir : storedIgnoredDirectories) {
+            if (folderName.equals(ignoredDir)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
