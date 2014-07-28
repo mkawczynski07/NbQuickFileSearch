@@ -1,24 +1,20 @@
 package pl.nazaweb.netbeans.quickfilesearch.search;
 
-import pl.nazaweb.netbeans.quickfilesearch.files.FileItem;
+import pl.nazaweb.netbeans.quickfilesearch.search.strategy.CamelCase;
+import pl.nazaweb.netbeans.quickfilesearch.search.strategy.Default;
+import pl.nazaweb.netbeans.quickfilesearch.search.strategy.SearchStrategy;
 
 /**
  *
- * @author Marek Kawczyński (marekka@mikronika.com.pl)
+ * @author naza
  */
 public class FileTester {
 
-    private String requestText;
-    private FileItem file;
+    private final Default defaultStrategy = new Default();
+    private final CamelCase camelCase = new CamelCase();
 
-    public boolean test(String text, FileItem file) {
-        init(text, file);
-        return file.getName().toLowerCase().contains(text.toLowerCase());
-    }
-
-    private void init(String text, FileItem file) {
-        this.requestText = text;
-        this.file = file;
+    public SearchStrategy getStrategy(String text) {
+        return defaultStrategy;
     }
 
 }
