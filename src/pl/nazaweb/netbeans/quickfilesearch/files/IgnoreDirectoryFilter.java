@@ -18,12 +18,8 @@ public class IgnoreDirectoryFilter implements FileFilter {
     public boolean accept(File directory) {
         String directoryPath = extractDirectoryPath(directory);
         List<String> storedIgnoredDirectories = Options.getIgnoredFiles();
-        for (String ignoredDir : storedIgnoredDirectories) {
-            if (ignoredDir.isEmpty() == false && directoryPath.equals(ignoredDir)) {
-                return false;
-            }
-        }
-        return true;
+        return storedIgnoredDirectories.stream().noneMatch((ignoredDir)
+                -> (ignoredDir.isEmpty() == false && directoryPath.contains(ignoredDir)));
     }
 
     private String extractDirectoryPath(File directory) {
