@@ -36,7 +36,7 @@ public class IgnoreDirectoryFilter implements FileFilter {
     }
 
     private String removeFileSeparatorIfExistsOnFirstPosition(String directoryPath) {
-        if (directoryPath.toCharArray()[0] == File.separatorChar) {
+        if (directoryPath.isEmpty() == false && directoryPath.toCharArray()[0] == File.separatorChar) {
             return directoryPath.substring(1);
         }
         return directoryPath;
