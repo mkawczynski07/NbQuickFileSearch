@@ -1,2 +1,5 @@
 /build/
 /nbproject/private/
+*.tmp
+nbproject/platform.properties
+
