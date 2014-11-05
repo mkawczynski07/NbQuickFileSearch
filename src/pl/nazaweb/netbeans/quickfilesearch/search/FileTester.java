@@ -14,7 +14,7 @@ public class FileTester {
     private final CamelCase camelCase = new CamelCase();
 
     public SearchStrategy getStrategy(String text) {
-        return defaultStrategy;
+        return camelCase;
     }
 
 }
